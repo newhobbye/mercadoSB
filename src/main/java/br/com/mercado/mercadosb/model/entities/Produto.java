@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Produto {
@@ -13,18 +12,13 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotBlank
 	private String nome;
-	@NotBlank
 	@Min(0)
 	private double precoVarejo;
-	@NotBlank
 	@Min(0)
 	private double precoAtacado;
-	@NotBlank
 	@Min(0)
 	private int qtd;
-	@NotBlank
 	private String categoria;
 	
 	public Produto() {
