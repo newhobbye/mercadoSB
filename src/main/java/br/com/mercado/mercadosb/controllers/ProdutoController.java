@@ -3,6 +3,8 @@ package br.com.mercado.mercadosb.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,10 +43,35 @@ public class ProdutoController {
 		return produto;
 
 	}
+	//Deleção por id
 	@DeleteMapping("/{id}")
 	public void excluirProduto(@PathVariable int id) {
 		produtoRepository.deleteById(id);
 	}
+	
+	//Consulta por nome
+	@GetMapping("/nome/{partNome}")
+	public Iterable<Produto> obterProdutosPorNome(@PathVariable String partNome){
+		return produtoRepository.findByNomeContaining(partNome);
+		
+		
+	}
+	//Consulta por pagina
+	@GetMapping(path = "/pagina/{numeroPagina}/{qtdPaginas}")
+	public Iterable<Produto> obterProdutoPorPaginas(@PathVariable int numeroPagina,
+			@PathVariable int qtdPaginas){
+		if(qtdPaginas >= 4) qtdPaginas = 4;
+		Pageable page = PageRequest.of(numeroPagina, qtdPaginas);
+		return produtoRepository.findAll(page);
+	}
+	
+	//Busca por id
+	@GetMapping("/{id}")
+	public java.util.Optional<Produto> buscaPorId(@PathVariable int id) {
+		return produtoRepository.findById(id);
+	}
+	
+	
 		
 	
 
